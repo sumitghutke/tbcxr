@@ -55,6 +55,7 @@ Thumbs.db
 models/
 data/
 outputimg/researchpapers/
+DOC-20251226-WA0032/
 tb_model/
 *.pt copy
 *.onnx.data
