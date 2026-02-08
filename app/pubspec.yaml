@@ -1,0 +1,52 @@
+name: tbcxr
+description: AI-powered Chest X-Ray Analyzer for Tuberculosis Screening and Radiological Reporting.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # Network & Utilities
+  http: ^1.1.0
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  permission_handler: ^11.0.1
+  open_filex: ^4.3.2
+  universal_io: ^2.3.1
+
+  # Image Processing
+  image: ^4.5.4
+  image_picker: ^1.0.0
+
+  # AI & Machine Learning
+  tflite_flutter: ^0.12.1
+  google_generative_ai: ^0.4.7
+
+  # PDF & Reporting
+  pdf: ^3.11.0
+  printing: ^5.14.2
+  flutter_markdown: ^0.7.7+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/labels.txt
+    - assets/tb_model_best.tflite

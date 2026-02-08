@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Automatic Detection of Tuberculosis using Deep Learning: A DenseNet121 Approach</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            line-height: 1.6;
+            margin: 40px auto;
+            max-width: 800px;
+            color: #333;
+            text-align: justify;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 16pt;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 14pt;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .abstract {
+            font-style: italic;
+            margin: 20px 40px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 3px solid #0056b3;
+        }
+
+        .figure {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .figure img {
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        .caption {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        .references {
+            font-size: 10pt;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Automatic Detection of Tuberculosis using Deep Learning: A DenseNet121 Approach</h1>
+    <p style="text-align: center; font-style: italic;">Sumit Ghutke</p>
+
+    <div class="abstract">
+        <strong>Abstract:</strong> Tuberculosis (TB) remains a major global health threat, requiring timely and accurate
+        diagnosis. Chest X-rays (CXRs) are a primary screening tool, but their interpretation is subject to
+        inter-observer variability and a shortage of radiologists. This paper presents a deep learning framework
+        utilizing a customized DenseNet121 architecture for the automatic binary classification of TB from CXR images.
+        By leveraging transfer learning and robust data augmentation techniques—including random rotation, color jitter,
+        and Gaussian blur—we simulate real-world data variability. Our model demonstrates promising performance with a
+        validation accuracy of approximately 97% in finetuning experiments, showing the potential for assisting
+        clinicians in resource-constrained settings. We further discuss the deployment of this model via a mobile
+        application using TensorFlow Lite, aiming to bring accessible diagnostics to the point of care.
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p>Tuberculosis (TB) is an infectious disease capable of causing severe lung damage and, if left untreated, death.
+        According to the World Health Organization (WHO), TB is one of the top 10 causes of death worldwide [1]. Early
+        detection is critical for effective treatment and controlling the spread of the disease. Standard diagnostic
+        methods include sputum smear microscopy, molecular tests, and chest radiography. However, manual interpretation
+        of Chest X-rays is time-consuming and requires expert radiologists, who are often scarce in high-burden
+        countries.</p>
+
+    <p>Recent advancements in Artificial Intelligence (AI) and Deep Learning (DL) have shown remarkable success in
+        medical image analysis. Convolutional Neural Networks (CNNs) can automatically extract features from images,
+        offering a second opinion to radiologists and potentially automating screening in remote areas [2]. This study
+        proposes a deep learning solution based on the DenseNet121 architecture to classify chest X-rays as "Normal" or
+        "Tuberculosis".</p>
+
+    <h2>2. Related Work</h2>
+    <p>Deep Learning has been extensively applied to chest radiograph analysis. Rajpurkar et al. [4] introduced CheXNet,
+        a 121-layer Dense Convolutional Network trained on the ChestX-ray14 dataset, which achieved radiologist-level
+        performance in detecting pneumonia. Similarly, Lakhani and Sundaram demonstrated high accuracy in TB detection
+        using an ensemble of AlexNet and GoogLeNet.</p>
+    <p>Our work builds upon these foundations by adopting DenseNet121 [3], which addresses the vanishing gradient
+        problem and ensures maximum information flow between layers. Unlike previous studies relying on massive
+        datasets, we focus on optimizing the model for a smaller, targeted dataset using transfer learning and heavy
+        data augmentation, making it suitable for deployment in resource-constrained mobile environments.</p>
+
+    <h2>3. Methodology</h2>
+
+    <h3>3.1 Model Architecture</h3>
+    <p>We employed the DenseNet121 architecture, a densely connected convolutional network known for its parameter
+        efficiency and strong feature propagation.</p>
+    <ul>
+        <li><strong>Backbone:</strong> Pretrained DenseNet121 (weights initialized from ImageNet).</li>
+        <li><strong>Classifier Head:</strong> The original classification layer was replaced with a custom sequential
+            layer consisting of Dropout (p=0.5) and a Linear Fully Connected layer transforming 1024 input features to 2
+            output classes (Normal vs TB).</li>
+        <li><strong>Loss Function:</strong> CrossEntropyLoss was used to compute the error between predicted and actual
+            labels.</li>
+    </ul>
+
+    <div class="figure">
+        <img src="../../publication_figures/methodology_flowchart.png" alt="Methodology Flowchart">
+        <div class="caption">Figure 1: Proposed Deep Learning Pipeline. The workflow illustrates the preprocessing steps
+            and the flow through the DenseNet121 architecture to the final classification head.</div>
+    </div>
+
+    <div class="figure">
+        <img src="../../publication_figures/system_architecture.png" alt="System Architecture">
+        <div class="caption">Figure 2: End-to-End System Architecture. The schematic shows the transition from Model
+            Training on Cloud GPUs to Optimization (ONNX/TFLite) and final Edge Deployment on a mobile device.</div>
+    </div>
+
+    <h3>3.2 Dataset and Preprocessing</h3>
+    <p>The model was trained on a dataset of chest X-ray images organized into two classes: Normal and Tuberculosis. The
+        dataset was split into training (80%) and validation (20%) sets to evaluate model generalization.</p>
+    <p>To improve model robustness and prevent overfitting, we applied extensive data augmentation using the PyTorch
+        <code>torchvision</code> library. The preprocessing pipeline includes Resize (256x256), Random Rotation (15
+        degrees), Color Jitter, Random Grayscale, Gaussian Blur, and Normalization (ImageNet stats).</p>
+
+    <div class="figure">
+        <img src="../../publication_figures/data_distribution.png" alt="Data Distribution">
+        <div class="caption">Figure 3: Class Distribution of the Dataset (Normal vs. Tuberculosis).</div>
+    </div>
+
+    <h2>4. Results</h2>
+    <h3>4.1 Evaluation Metrics</h3>
+    <p>The model was evaluated on a held-out validation set of 973 images. The performance metrics are summarized below:
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1-Score</th>
+                <th>Support</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Normal</td>
+                <td>0.97</td>
+                <td>0.99</td>
+                <td>0.98</td>
+                <td>771</td>
+            </tr>
+            <tr>
+                <td>Tuberculosis</td>
+                <td>0.96</td>
+                <td>0.88</td>
+                <td>0.92</td>
+                <td>202</td>
+            </tr>
+            <tr>
+                <td><strong>Accuracy</strong></td>
+                <td colspan="3"><strong>0.97</strong></td>
+                <td>973</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>The model achieved an overall accuracy of <strong>97%</strong>, demonstrating high reliability in distinguishing
+        between healthy and infected lungs.</p>
+
+    <div class="figure">
+        <img src="../../publication_figures/confusion_matrix.png" alt="Confusion Matrix">
+        <div class="caption">Figure 4: Confusion Matrix of the Validation Set. The model correctly identified 178 out of
+            202 TB cases, with only 24 false negatives.</div>
+    </div>
+
+    <h2>5. Conclusion</h2>
+    <p>This research demonstrates the feasibility of checking for Tuberculosis using a lightweight Deep Learning
+        approach. By optimizing the DenseNet121 model and deploying it on mobile devices, we aim to contribute to the
+        global effort to end TB by providing a fast, accessible, and automated screening tool.</p>
+
+    <h2>References</h2>
+    <div class="references">
+        <p>[1] World Health Organization. (2024). Tuberculosis Fact Sheet.</p>
+        <p>[2] He, K., et al. (2016). Deep Residual Learning for Image Recognition. CVPR.</p>
+        <p>[3] Huang, G., et al. (2017). Densely Connected Convolutional Networks. CVPR.</p>
+        <p>[4] Rajpurkar, P., et al. (2017). CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep
+            Learning. arXiv.</p>
+    </div>
+
+</body>
+
+</html>

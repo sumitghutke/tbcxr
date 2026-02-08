@@ -1,0 +1,28 @@
+Training on 529 images...
+Starting training...
+[Epoch: 1, Batch:    10] loss: 0.699
+[Epoch: 1, Batch:    20] loss: 0.690
+[Epoch: 1, Batch:    30] loss: 0.662
+[Epoch: 1, Batch:    40] loss: 0.679
+[Epoch: 1, Batch:    50] loss: 0.624
+[Epoch: 1, Batch:    60] loss: 0.717
+[Epoch 1] Validation Accuracy: 75.94%
+New Best Model! Saving to 'tb_model_best.pt'...
+[Epoch: 2, Batch:    10] loss: 0.637
+[Epoch: 2, Batch:    20] loss: 0.648
+[Epoch: 2, Batch:    30] loss: 0.666
+[Epoch: 2, Batch:    40] loss: 0.661
+[Epoch: 2, Batch:    50] loss: 0.735
+[Epoch: 2, Batch:    60] loss: 0.623
+[Epoch 2] Validation Accuracy: 76.69%
+New Best Model! Saving to 'tb_model_best.pt'...
+[Epoch: 3, Batch:    10] loss: 0.594
+[Epoch: 3, Batch:    20] loss: 0.651
+[Epoch: 3, Batch:    30] loss: 0.626
+[Epoch: 3, Batch:    40] loss: 0.630
+[Epoch: 3, Batch:    50] loss: 0.566
+[Epoch: 3, Batch:    60] loss: 0.588
+[Epoch 3] Validation Accuracy: 75.19%
+[Epoch: 4, Batch:    10] loss: 0.717
+[Epoch: 4, Batch:    20] loss: 0.652
+[Epoch: 4, Batch:    30] loss: 0.562
