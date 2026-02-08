@@ -54,6 +54,7 @@ Thumbs.db
 *.tflite
 models/
 data/
+outputimg/
 tb_model/
 *.pt copy
 *.onnx.data
