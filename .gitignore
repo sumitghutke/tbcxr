@@ -61,6 +61,7 @@ tb_model/
 *.onnx.data
 *.deb
 *.zip
+kaggle_upload/
 
 # Logs
 *.log
